@@ -1,35 +1,23 @@
 <template>
 <div class="post">
-    <h3>{{title}}</h3>
-    <p>{{content}}</p>
+    <h3>{{props.title}}</h3>
+    <p>{{props.content}}</p>
     <input placeholder="Escribe tu saludo" v-model="message"/><button @click="sayHiFromChild">Di hola</button>
 </div>
 </template>
 
-<script lang="ts">
-import {defineComponent, ref, Ref} from 'vue'
-export default defineComponent({
-    name:"PostDetail",
-    props:{
-        title:{
-            type:String,
-            required:true
-        },
-        content:{
-            type:String,
-            required:true
-        }
-    },
-    emits:["sayHi"],
-    setup(props, {emit}){
+<script lang="ts" setup>
+import {defineProps,defineEmits, ref, Ref} from 'vue'
+    const props = defineProps({
+        title:String,
+        content:String
+    })
+    const emit = defineEmits(["sayHi"])
         const message: Ref<string> = ref("")
 
         const sayHiFromChild = ()=>{
             emit("sayHi", message.value)
-        }
-        return {props, sayHiFromChild, message}
-    }
-})
+           }
 
 </script>
 
